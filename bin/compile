@@ -47,7 +47,7 @@ tar xzf $JULIA_BINARIES -C $BUILD_DIR
 
 echo "Creating runtime environment" | indent
 mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\"\$HOME/julia-2ac304dfba/bin:$PATH\"" >> $BUILD_DIR/.profile.d/julia_paths.sh
+echo "export PATH=\$HOME/julia-2ac304dfba/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
 
 echo "Julia successfully installed" | indent
 

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+# debug
+# set -x
+
+shopt -s extglob
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+
+# parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+BIN_PATH="$BUILD_DIR/bin"
+TMP_PATH="$BUILD_DIR/tmp"
+mkdir -p $CACHE_DIR $BIN_PATH $TMP_PATH
+
+JULIA_VERSION="0.4.5"
+S3_BUCKET="julialang"
+JULIA_URL="http://${S3_BUCKET}.s3.amazonaws.com/bin/linux/x64/0.4/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
+# https://julialang.s3.amazonaws.com/bin/linux/x64/0.4/julia-0.4.5-linux-x86_64.tar.gz
+JULIA_BINARIES="$CACHE_DIR/julia_${JULIA_VERSION}.tar.gz"
+JULIA_PATH="$TMP_PATH/julia"
+
+if [ -f $JULIA_BINARIES ]; then
+  echo "Using Julia binaries from cache" | indent
+else
+  echo "Downloading binaries ($JULIA_URL)" | indent
+  curl -L $JULIA_URL -o $JULIA_BINARIES 
+fi
+
+echo "Unpacking binaries" | indent
+tar xzf $JULIA_BINARIES -C $BUILD_DIR
+
+# rm -rf $JULIA_PATH
+
+echo "Creating runtime environment" | indent
+mkdir -p $BUILD_DIR/.profile.d
+echo "export PATH=\"\$HOME/julia-2ac304dfba/bin:$PATH\"" >> $BUILD_DIR/.profile.d/julia_paths.sh
+
+echo "Julia successfully installed" | indent
+

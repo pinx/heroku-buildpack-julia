@@ -26,10 +26,10 @@ BIN_PATH="$BUILD_DIR/bin"
 TMP_PATH="$BUILD_DIR/tmp"
 mkdir -p $CACHE_DIR $BIN_PATH $TMP_PATH
 
-JULIA_VERSION="0.4.5"
+JULIA_VERSION="0.4.6"
 S3_BUCKET="julialang"
 JULIA_URL="http://${S3_BUCKET}.s3.amazonaws.com/bin/linux/x64/0.4/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
-# https://julialang.s3.amazonaws.com/bin/linux/x64/0.4/julia-0.4.5-linux-x86_64.tar.gz
+# https://julialang.s3.amazonaws.com/bin/linux/x64/0.4/julia-0.4.6-linux-x86_64.tar.gz
 JULIA_BINARIES="$CACHE_DIR/julia_${JULIA_VERSION}.tar.gz"
 JULIA_PATH="$TMP_PATH/julia"
 
@@ -47,12 +47,11 @@ tar xzf $JULIA_BINARIES -C $BUILD_DIR
 
 echo "Creating runtime environment" | indent
 mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\$HOME/julia-2ac304dfba/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
+echo "export PATH=\$HOME/julia-2e358ce975/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
 
 echo "Installing packages" | indent
 cd $BUILD_DIR
-julia-2ac304dfba/bin/julia package.jl
+julia-2e358ce975/bin/julia package.jl
 mv ~/.julia ./
 
 echo "Julia successfully installed" | indent
-

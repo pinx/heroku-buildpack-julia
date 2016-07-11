@@ -17,6 +17,17 @@ Add this line to the .buildpacks file in your project:
 
 or use the command `heroku buildpacks:set`
 
+In your project, create a file `package.jl` with any
+Julia code you want to run after installation.
+E.g. to add Postgres support:
+```elixir
+Pkg.clone("https://github.com/JuliaDB/DBI.jl.git")
+Pkg.add("DataArrays")
+Pkg.clone("https://github.com/JuliaDB/PostgreSQL.jl.git")
+using DBI
+using PostgreSQL
+```
+
 
 ## Thanks
 

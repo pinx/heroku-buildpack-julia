@@ -6,7 +6,7 @@ This is a [Heroku buildpack][0] for adding a [Julia binary][1] to your environme
 ## Versions
 
 * Buildpack: `0.2`
-* Julia: `0.4.6`
+* Julia: `0.5.0`
 
 
 ## Usage
@@ -20,7 +20,7 @@ or use the command `heroku buildpacks:set`
 In your project, create a file `package.jl` with any
 Julia code you want to run after installation.
 E.g. to add Postgres support:
-```elixir
+```julia
 Pkg.clone("https://github.com/JuliaDB/DBI.jl.git")
 Pkg.add("DataArrays")
 Pkg.clone("https://github.com/JuliaDB/PostgreSQL.jl.git")

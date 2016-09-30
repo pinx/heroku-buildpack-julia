@@ -26,13 +26,12 @@ BIN_PATH="$BUILD_DIR/bin"
 TMP_PATH="$BUILD_DIR/tmp"
 mkdir -p $CACHE_DIR $BIN_PATH $TMP_PATH
 
-JULIA_VERSION="0.5.0"
-JULIAHASH="julia-3c9d75391c"
+JULIA_VERSION="julia-0.5.0"
 
 S3_BUCKET="julialang"
-JULIA_URL="http://${S3_BUCKET}.s3.amazonaws.com/bin/linux/x64/0.5/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
+JULIA_URL="http://${S3_BUCKET}.s3.amazonaws.com/bin/linux/x64/0.5/${JULIA_VERSION}-linux-x86_64.tar.gz"
            # https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.0-linux-x86_64.tar.gz
-JULIA_BINARIES="$CACHE_DIR/julia_${JULIA_VERSION}.tar.gz"
+JULIA_BINARIES="$CACHE_DIR/${JULIA_VERSION}.tar.gz"
 JULIA_PATH="$TMP_PATH/julia"
 
 if [ -f $JULIA_BINARIES ]; then
@@ -43,13 +42,13 @@ else
 fi
 
 echo "Unpacking binaries" | indent
-tar xzf $JULIA_BINARIES -C $BUILD_DIR
+mkdir -p $BUILD_DIR/$JULIA_VERSION && tar xzf $JULIA_BINARIES -C $BUILD_DIR/$JULIA_VERSION --strip-components=1
 
 # rm -rf $JULIA_PATH
 
 echo "Creating runtime environment" | indent
 mkdir -p $BUILD_DIR/.profile.d
-echo "export PATH=\$HOME/\$JULIAHASH/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
+echo "export PATH=\$HOME/\$JULIA_VERSION/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
 
 
 # CMake
@@ -70,7 +69,7 @@ cmake --version
 
 echo "Installing packages" | indent
 cd $BUILD_DIR
-$JULIAHASH/bin/julia package.jl
+$JULIA_VERSION/bin/julia package.jl
 
 mv ~/.julia ./
 

@@ -63,9 +63,10 @@ else
 fi
 
 echo "Unpacking binaries" | indent
+mkdir -p /tmp/codon/vendor
 tar xzf $CMAKE_BINARIES -C /tmp/codon/vendor
 
-cmake --version
+# /tmp/codon/vendor/cmake --version
 
 echo "Installing packages" | indent
 cd $BUILD_DIR

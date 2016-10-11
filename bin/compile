@@ -50,24 +50,6 @@ echo "Creating runtime environment" | indent
 mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\$HOME/\$JULIA_VERSION/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
 
-
-# CMake
-
-CMAKE_URL="https://s3.amazonaws.com/mergeguard/cmake.tar.gz"
-CMAKE_BINARIES="$CACHE_DIR/cmake.tar.gz"
-if [ -f $CMAKE_BINARIES ]; then
-  echo "Using CMake binaries from cache" | indent
-else
-  echo "Downloading binaries ($CMAKE_URL)" | indent
-  curl -L $CMAKE_URL -o $CMAKE_BINARIES 
-fi
-
-echo "Unpacking binaries" | indent
-mkdir -p /tmp/codon/vendor
-tar xzf $CMAKE_BINARIES -C /tmp/codon/vendor
-
-# /tmp/codon/vendor/cmake --version
-
 echo "Installing packages" | indent
 cd $BUILD_DIR
 $JULIA_VERSION/bin/julia package.jl

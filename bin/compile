@@ -44,11 +44,11 @@ fi
 echo "Unpacking binaries" | indent
 mkdir -p $BUILD_DIR/$JULIA_VERSION && tar xzf $JULIA_BINARIES -C $BUILD_DIR/$JULIA_VERSION --strip-components=1
 
-# rm -rf $JULIA_PATH
-
 echo "Creating runtime environment" | indent
 mkdir -p $BUILD_DIR/.profile.d
 echo "export PATH=\$HOME/\$JULIA_VERSION/bin:\$PATH" >> $BUILD_DIR/.profile.d/julia_paths.sh
+
+export PATH=$BUILD_DIR/.heroku/vendor/bin:$PATH
 
 echo "Installing packages" | indent
 cd $BUILD_DIR

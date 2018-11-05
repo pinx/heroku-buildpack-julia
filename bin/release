@@ -2,5 +2,7 @@
 # bin/release <build-dir>
 
 cat <<EOF
---- {}
+---
+config_vars:
+  PATH: $PATH:/app/vendor/cmake/bin
 EOF

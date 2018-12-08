@@ -15,7 +15,7 @@ Add this line to the .buildpacks file in your project:
 
 `https://github.com/pinx/heroku-buildpack-julia.git`
 
-or use the command `heroku buildpacks:set`
+or use the command `heroku buildpacks:set https://github.com/pinx/heroku-buildpack-julia.git`
 
 In your project, create a file `package.jl` with any
 Julia code you want to run after installation.
